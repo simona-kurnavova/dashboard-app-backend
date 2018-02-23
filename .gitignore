@@ -1,0 +1,3 @@
+dashboard/.idea/
+dashboard/dashboard/__pycache__/
+dashboard/db.sqlite3
