@@ -21,5 +21,9 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # url(r'^', include('dash_app.urls')),  # include of urls from dash_app
+    url(r'^', include('dash_app.urls')),  # include of urls from dash_app
+]
+
+urlpatterns += [
+    url(r'^api/', include('rest_framework.urls')),
 ]
