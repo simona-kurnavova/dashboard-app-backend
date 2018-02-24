@@ -1,5 +1,6 @@
 from dash_app.models import *
 from rest_framework import serializers
+from django.contrib.auth.models import User
 
 
 class AppSerializer(serializers.ModelSerializer):
@@ -24,3 +25,9 @@ class DashboardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dashboard
         fields = ('owner', 'widgets')
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username')
