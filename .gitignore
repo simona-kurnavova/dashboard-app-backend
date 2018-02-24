@@ -1,3 +1,7 @@
 dashboard/.idea/
 dashboard/dashboard/__pycache__/
 dashboard/db.sqlite3
+dashboard/db.sqlite
+dashboard/dash_app/__pycache__/
+dashboard/dash_app/migrations/
+
