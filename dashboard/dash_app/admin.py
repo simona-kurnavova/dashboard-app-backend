@@ -4,5 +4,5 @@ from dash_app.models import *
 
 admin.site.register(App)
 admin.site.register(Account)
-admin.site.register(Widget)
 admin.site.register(Dashboard)
+

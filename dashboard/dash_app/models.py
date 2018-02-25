@@ -15,13 +15,13 @@ class Account(models.Model):
     info = models.CharField(max_length=300, blank=True, null=True)
 
 
+class Dashboard(models.Model):
+    owner = models.ForeignKey('auth.User', related_name='dashboards', on_delete=models.CASCADE)
+
+
 class Widget(models.Model):
     dashboard = models.ForeignKey('Dashboard', related_name='widgets', on_delete=models.CASCADE)
     app = models.ForeignKey('App', related_name='widgets', on_delete=models.CASCADE)
     account = models.ForeignKey('Account', related_name='widgets', on_delete=models.CASCADE)
     position_x = models.IntegerField()  # X position of left upper corner on dashboard
     position_y = models.IntegerField()  # Y position of left upper corner on dashboard
-
-
-class Dashboard(models.Model):
-    owner = models.ForeignKey('auth.User', related_name='dashboards', on_delete=models.CASCADE)

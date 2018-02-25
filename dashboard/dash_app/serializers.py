@@ -12,19 +12,19 @@ class AppSerializer(serializers.ModelSerializer):
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ('owner', 'type', 'name', 'token', 'info')
+        fields = ('id', 'owner', 'type', 'name', 'token', 'info')
 
 
 class WidgetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Widget
-        fields = ('app', 'account', 'position_x', 'position_y')
+        fields = ('id', 'dashboard', 'app', 'account', 'position_x', 'position_y')
 
 
 class DashboardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dashboard
-        fields = ('owner', 'widgets')
+        fields = ('id', 'owner')
 
 
 class UserSerializer(serializers.ModelSerializer):
