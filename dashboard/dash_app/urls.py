@@ -15,5 +15,6 @@ router.register(r'users', views.UserViewSet)
 
 urlpatterns = [
     url(r'^schema/$', schema_view),
-    url(r'^', include(router.urls))
+    url(r'^', include(router.urls)),
+    url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 ]

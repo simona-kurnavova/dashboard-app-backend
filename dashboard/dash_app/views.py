@@ -1,10 +1,12 @@
 from dash_app.models import *
 from dash_app.serializers import *
 from django.contrib.auth.models import User
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
+from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
