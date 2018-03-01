@@ -1,14 +1,9 @@
-from dash_app.models import *
 from dash_app.serializers import *
 from django.contrib.auth.models import User
-from rest_framework import viewsets, permissions
-from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope
-
-
-class UserViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+from rest_framework import viewsets, permissions, response
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
 
 class AppViewSet(viewsets.ModelViewSet):
@@ -35,3 +30,28 @@ class DashboardViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class CreateUserView(APIView):
+    ''' Standard view for creating new user only. Without authentication or permissions. '''
+    authentication_classes = ()
+    permission_classes = ()
+    model = User
+    serializer_class = UserSerializer
+
+    def get(self, request, format=None):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
