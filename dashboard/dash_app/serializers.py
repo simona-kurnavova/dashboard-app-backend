@@ -18,7 +18,7 @@ class AccountSerializer(serializers.ModelSerializer):
 class WidgetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Widget
-        fields = ('id', 'dashboard', 'app', 'account', 'position_x', 'position_y')
+        fields = ('id', 'dashboard', 'app', 'account', 'position_x', 'position_y', 'size_x', 'size_y')
 
 
 class DashboardSerializer(serializers.ModelSerializer):

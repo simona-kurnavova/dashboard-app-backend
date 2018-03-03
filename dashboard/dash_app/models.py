@@ -25,3 +25,6 @@ class Widget(models.Model):
     account = models.ForeignKey('Account', related_name='widgets', on_delete=models.CASCADE)
     position_x = models.IntegerField()  # X position of left upper corner on dashboard
     position_y = models.IntegerField()  # Y position of left upper corner on dashboard
+    size_x = models.IntegerField()
+    size_y = models.IntegerField()
+
