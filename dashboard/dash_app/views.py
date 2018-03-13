@@ -18,10 +18,17 @@ class AccountViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+    def get_queryset(self):
+        return Account.objects.filter(owner=self.request.user.id)
+
 
 class WidgetViewSet(viewsets.ModelViewSet):
     queryset = Widget.objects.all()
     serializer_class = WidgetSerializer
+
+    def get_queryset(self):
+        # TODO: restrict only owner
+        return Widget.objects.all()
 
 
 class DashboardViewSet(viewsets.ModelViewSet):
@@ -31,6 +38,9 @@ class DashboardViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+    def get_queryset(self):
+        return Dashboard.objects.filter(owner=self.request.user.id)
+
 
 class CreateUserView(APIView):
     ''' Standard view for creating new user only. Without authentication or permissions. '''
@@ -38,11 +48,6 @@ class CreateUserView(APIView):
     permission_classes = ()
     model = User
     serializer_class = UserSerializer
-
-    def get(self, request, format=None):
-        users = User.objects.all()
-        serializer = UserSerializer(users, many=True)
-        return Response(serializer.data)
 
     def post(self, request, format=None):
         serializer = UserSerializer(data=request.data)
@@ -53,5 +58,13 @@ class CreateUserView(APIView):
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = CurrentUserSerializer
+
+    def get_queryset(self):
+        return User.objects.filter(id=self.request.user.id)
+
+    def get_object(self):
+        # TODO: Access denied
+        pass
