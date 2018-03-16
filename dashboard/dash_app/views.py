@@ -1,3 +1,6 @@
+from itertools import chain
+
+from django.db.models import QuerySet
 from django.http import HttpResponse
 from rest_framework.decorators import detail_route
 from dash_app.serializers import *
@@ -29,8 +32,14 @@ class WidgetViewSet(viewsets.ModelViewSet):
     serializer_class = WidgetSerializer
 
     def get_queryset(self):
-        # TODO: restrict only owner
-        return Widget.objects.all()
+        ''' Finds out which dashboards are owned by user and returns only widgets from them. '''
+        dashboards = self.request.user.dashboards.all()
+        widgets = []
+        for dashboard in dashboards:
+            temp = Widget.objects.filter(dashboard=dashboard.id)
+            for widget in temp:
+                widgets.append(widget)
+        return widgets
 
 
 class DashboardViewSet(viewsets.ModelViewSet):
