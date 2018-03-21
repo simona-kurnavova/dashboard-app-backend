@@ -49,6 +49,12 @@ class WidgetViewSet(viewsets.ModelViewSet):
             raise Http404
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+    def partial_update(self, request, pk=None):
+        serializer = WidgetSerializer(Widget.objects.get(id=pk), request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 class DashboardViewSet(viewsets.ModelViewSet):
     queryset = Dashboard.objects.all()
