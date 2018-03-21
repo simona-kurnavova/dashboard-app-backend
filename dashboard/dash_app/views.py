@@ -1,14 +1,9 @@
-from itertools import chain
-
-from django.db.models import QuerySet
-from django.http import HttpResponse
-from rest_framework.decorators import detail_route
+from django.http import Http404
 from dash_app.serializers import *
 from django.contrib.auth.models import User
-from rest_framework import viewsets, permissions, response
+from rest_framework import viewsets, permissions, response, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
 
 
 class AppViewSet(viewsets.ModelViewSet):
@@ -19,6 +14,7 @@ class AppViewSet(viewsets.ModelViewSet):
 class AccountViewSet(viewsets.ModelViewSet):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
+    # TODO: get object, delete and update only by owner
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -39,7 +35,19 @@ class WidgetViewSet(viewsets.ModelViewSet):
             temp = Widget.objects.filter(dashboard=dashboard.id)
             for widget in temp:
                 widgets.append(widget)
+        widgets.sort(key=lambda x: (x.position_y, x.position_x))  # order by position y and x
         return widgets
+
+    def destroy(self, request, pk=None, **kwargs):
+        ''' Returns 204 status after successful delete, 404 if doesn't exists and 403 if access is forbidden. '''
+        try:
+            widget = Widget.objects.get(id=pk)
+            if widget.dashboard.owner != self.request.user:
+                return Response(status=status.HTTP_403_FORBIDDEN)
+            widget.delete()
+        except Widget.DoesNotExist:
+            raise Http404
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class DashboardViewSet(viewsets.ModelViewSet):
@@ -77,5 +85,4 @@ class UserViewSet(viewsets.ModelViewSet):
         return User.objects.filter(id=self.request.user.id)
 
     def get_object(self):
-        # TODO: Access denied
-        pass
+        return Response(status=status.HTTP_403_FORBIDDEN)
