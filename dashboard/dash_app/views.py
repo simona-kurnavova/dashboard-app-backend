@@ -92,3 +92,9 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def get_object(self):
         return Response(status=status.HTTP_403_FORBIDDEN)
+
+    def partial_update(self, request, pk=None):
+        serializer = UserSerializer(User.objects.get(id=pk), request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
