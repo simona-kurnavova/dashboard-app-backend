@@ -3,6 +3,9 @@ from rest_framework.routers import DefaultRouter
 from rest_framework.schemas import get_schema_view
 from dash_app import views
 
+# Routing for the application
+# Generated urls for the modelViewSets of django rest framework
+
 schema_view = get_schema_view(title='API')
 
 router = DefaultRouter()
