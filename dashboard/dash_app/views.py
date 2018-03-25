@@ -7,23 +7,28 @@ from rest_framework.response import Response
 
 
 class AppViewSet(viewsets.ModelViewSet):
+    ''' App views '''
     queryset = App.objects.all()
     serializer_class = AppSerializer
 
 
 class AccountViewSet(viewsets.ModelViewSet):
+    ''' Account views '''
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
-    # TODO: get object, delete and update only by owner
+    # TODO: get object, delete only by owner
 
     def perform_create(self, serializer):
+        ''' Adds requesting user as an owner to the serializer. '''
         serializer.save(owner=self.request.user)
 
     def get_queryset(self):
+        ''' Returns accounts owned by requesting user. '''
         return Account.objects.filter(owner=self.request.user.id)
 
 
 class WidgetViewSet(viewsets.ModelViewSet):
+    ''' Widget views '''
     queryset = Widget.objects.all()
     serializer_class = WidgetSerializer
 
@@ -50,6 +55,7 @@ class WidgetViewSet(viewsets.ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def partial_update(self, request, pk=None):
+        ''' Partially updates widget information and keeps the id. '''
         serializer = WidgetSerializer(Widget.objects.get(id=pk), request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -61,9 +67,11 @@ class DashboardViewSet(viewsets.ModelViewSet):
     serializer_class = DashboardSerializer
 
     def perform_create(self, serializer):
+        ''' Adds requesting user as an owner to serializer. '''
         serializer.save(owner=self.request.user)
 
     def get_queryset(self):
+        ''' Returns dashboards owned by the requesting user. '''
         return Dashboard.objects.filter(owner=self.request.user.id)
 
 
@@ -75,7 +83,8 @@ class CreateUserView(APIView):
     serializer_class = UserSerializer
 
     def post(self, request, format=None):
-        serializer = UserSerializer(data=request.data)
+        ''' Creates new user and returns 201 on success and 400 on failure. '''
+        serializer = UserSerializer(data=request.dsata)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -83,17 +92,17 @@ class CreateUserView(APIView):
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    ''' User view - allowed only for authenticated users '''
     permission_classes = [permissions.IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = CurrentUserSerializer
 
     def get_queryset(self):
+        ''' Returns only requesting user information. '''
         return User.objects.filter(id=self.request.user.id)
 
-    def get_object(self):
-        return Response(status=status.HTTP_403_FORBIDDEN)
-
     def partial_update(self, request, pk=None):
+        ''' Partially updates user information and keeps the id. '''
         serializer = UserSerializer(User.objects.get(id=pk), request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
