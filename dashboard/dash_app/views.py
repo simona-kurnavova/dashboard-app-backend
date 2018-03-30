@@ -84,7 +84,7 @@ class CreateUserView(APIView):
 
     def post(self, request, format=None):
         ''' Creates new user and returns 201 on success and 400 on failure. '''
-        serializer = UserSerializer(data=request.dsata)
+        serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
