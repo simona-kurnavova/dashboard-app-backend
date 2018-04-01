@@ -3,3 +3,4 @@ from .test.dashboard_model_tests import DashboardModelTestCase
 from .test.account_model_tests import AccountModelTestCase
 from .test.widget_model_tests import WidgetModelTestCase
 from .test.app_serializer_test import AppSerializerTestCase
+from .test.dashboard_serializer_test import DashboardSerializerTestCase
