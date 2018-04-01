@@ -1,6 +1,6 @@
 from django.db import IntegrityError
 from django.test import TestCase
-from ..models import App
+from dash_app.models import App
 
 
 class AppModelTestCase(TestCase):

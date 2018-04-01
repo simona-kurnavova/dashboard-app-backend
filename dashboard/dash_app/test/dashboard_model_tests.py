@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
-from ..models import Dashboard
+from dash_app.models import Dashboard
 
 
 class DashboardModelTestCase(TestCase):

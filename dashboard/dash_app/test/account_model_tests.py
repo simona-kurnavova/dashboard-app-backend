@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
-from ..models import Account
+from dash_app.models import Account
 
 
 class AccountModelTestCase(TestCase):
