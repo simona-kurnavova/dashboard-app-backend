@@ -11,8 +11,8 @@ class WidgetModelTestCase(TestCase):
         dashboard0 = Dashboard.objects.create(owner=user0)
         dashboard1 = Dashboard.objects.create(owner=user1)
 
-        app0 = App.objects.create(name='test0', description='description', required_account='required')
-        app1 = App.objects.create(name='test1', description='description', required_account='required')
+        app0 = App.objects.create(name='test0', description='description')
+        app1 = App.objects.create(name='test1', description='description')
 
         account0 = Account.objects.create(owner=user0, type='type0', name='name0', token='token0', info='info0')
         account1 = Account.objects.create(owner=user1, type='type1', name='name1', token='token1', info='info1')

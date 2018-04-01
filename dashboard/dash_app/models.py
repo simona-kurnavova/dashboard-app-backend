@@ -4,7 +4,7 @@ from django.db import models
 class App(models.Model):
     name = models.CharField(max_length=40, unique=True)  # unique identifying name of an app, component name
     description = models.CharField(max_length=300, blank=True, null=True)
-    
+
 
 class Account(models.Model):
     owner = models.ForeignKey('auth.User', related_name='accounts', on_delete=models.CASCADE)
