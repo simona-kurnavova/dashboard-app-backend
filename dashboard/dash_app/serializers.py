@@ -7,7 +7,7 @@ class AppSerializer(serializers.ModelSerializer):
     ''' App serializer - full information '''
     class Meta:
         model = App
-        fields = ('id', 'name', 'description', 'required_account')
+        fields = ('id', 'name', 'description')
 
 
 class AccountSerializer(serializers.ModelSerializer):
