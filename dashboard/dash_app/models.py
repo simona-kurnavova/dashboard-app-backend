@@ -7,7 +7,7 @@ class App(models.Model):
 
 
 class Account(models.Model):
-    owner = models.ForeignKey('auth.User', related_name='accounts', on_delete=models.CASCADE)
+    owner = models.ForeignKey('auth.User', related_name='accounts', on_delete=models.CASCADE, blank=True, null=True)
     type = models.CharField(max_length=40)  # type of account: google, facebook, slack
     name = models.CharField(max_length=40)  # type of account: in readable form
     token = models.CharField(max_length=300)
