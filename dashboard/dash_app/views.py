@@ -16,7 +16,6 @@ class AccountViewSet(viewsets.ModelViewSet):
     ''' Account views '''
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
-    # TODO: get object, delete only by owner
 
     def perform_create(self, serializer):
         ''' Adds requesting user as an owner to the serializer. '''
@@ -25,6 +24,17 @@ class AccountViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         ''' Returns accounts owned by requesting user. '''
         return Account.objects.filter(owner=self.request.user.id)
+
+    def destroy(self, request, pk=None, **kwargs):
+        ''' Returns 204 status after successful delete, 404 if doesn't exists and 403 if access is forbidden. '''
+        try:
+            account = Account.objects.get(id=pk)
+            if account.owner != self.request.user:
+                return Response(status=status.HTTP_403_FORBIDDEN)
+            account.delete()
+        except Account.DoesNotExist:
+            raise Http404
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class WidgetViewSet(viewsets.ModelViewSet):

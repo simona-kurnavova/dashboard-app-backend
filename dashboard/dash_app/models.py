@@ -21,7 +21,7 @@ class Dashboard(models.Model):
 class Widget(models.Model):
     dashboard = models.ForeignKey('Dashboard', related_name='widgets', on_delete=models.CASCADE)
     app = models.ForeignKey('App', related_name='widgets', on_delete=models.CASCADE)
-    account = models.ForeignKey('Account', related_name='widgets', on_delete=models.CASCADE, blank=True, null=True)
+    account = models.ForeignKey('Account', related_name='widgets', on_delete=models.SET_NULL, blank=True, null=True)
     position_x = models.IntegerField()  # X position of left upper corner on dashboard
     position_y = models.IntegerField()  # Y position of left upper corner on dashboard
     size_x = models.IntegerField()
