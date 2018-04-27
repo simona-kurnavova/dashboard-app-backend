@@ -26,7 +26,7 @@ SECRET_KEY = 'v&4v=bh0vzs3poc2^2#tlxuc)sqbp-*oopvru%kzzfl-76!(6x'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://login.microsoftonline.com', '127.0.0.1']
 
 # OAuth2 module settings
 OAUTH2_PROVIDER = {
@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.admindocs',
     'dash_app',
     'oauth2_provider',
     'rest_framework',
