@@ -6,13 +6,15 @@ from django.contrib.auth.models import User
 class AppSerializer(serializers.ModelSerializer):
     ''' App serializer - full information '''
     class Meta:
+        ordering = ['-id']
         model = App
-        fields = ('id', 'name', 'description')
+        fields = ('id', 'name', 'description', 'allows_small_sizes')
 
 
 class AccountSerializer(serializers.ModelSerializer):
     ''' Account serializer - full information '''
     class Meta:
+        ordering = ['-id']
         model = Account
         fields = ('id', 'owner', 'type', 'name', 'token', 'info')
 
@@ -20,6 +22,7 @@ class AccountSerializer(serializers.ModelSerializer):
 class WidgetSerializer(serializers.ModelSerializer):
     ''' Widget serializer - full information '''
     class Meta:
+        ordering = ['-id']
         model = Widget
         fields = ('id', 'dashboard', 'app', 'account', 'position_x', 'position_y', 'size_x', 'size_y')
 
@@ -27,8 +30,9 @@ class WidgetSerializer(serializers.ModelSerializer):
 class DashboardSerializer(serializers.ModelSerializer):
     ''' Dashboard serializer - full information '''
     class Meta:
+        ordering = ['-id']
         model = Dashboard
-        fields = ('id', 'owner')
+        fields = ('id', 'owner', 'justification')
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -38,6 +42,7 @@ class UserSerializer(serializers.ModelSerializer):
     )
     
     class Meta:
+        ordering = ['-id']
         model = User
         fields = ('id', 'username', 'password', 'email')
 
@@ -52,5 +57,6 @@ class UserSerializer(serializers.ModelSerializer):
 class CurrentUserSerializer(serializers.ModelSerializer):
     ''' User serializer - partial information without sensitive data '''
     class Meta:
+        ordering = ['-id']
         model = User
         fields = ('id', 'username', 'email')

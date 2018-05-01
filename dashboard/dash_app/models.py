@@ -8,6 +8,7 @@ class App(models.Model):
     name = models.CharField(max_length=40, unique=True,
                             help_text="Unique name of the app, represents base of Angular component name")
     description = models.CharField(max_length=300, blank=True, null=True,  help_text="Brief description of the app")
+    allows_small_sizes = models.BooleanField(default=True)
 
 
 class Account(models.Model):
@@ -18,7 +19,7 @@ class Account(models.Model):
                               help_text="User that owns the account")
     type = models.CharField(max_length=40, help_text="Type of account, usually application name")
     name = models.CharField(max_length=40, help_text="Type of account in readable form")
-    token = models.CharField(max_length=300, help_text="Access token to application")
+    token = models.CharField(max_length=1000, help_text="Access token to application")
     info = models.CharField(max_length=300, blank=True, null=True,  help_text="Any info about the account or app")
 
 
@@ -28,6 +29,7 @@ class Dashboard(models.Model):
     """
     owner = models.ForeignKey('auth.User', related_name='dashboards', on_delete=models.CASCADE, blank=True, null=True,
                               help_text="User that owns the Dashboard")
+    justification = models.CharField(max_length=30, default='left', blank=True, null=True, help_text="Justification of dashboard widgets")
 
 
 class Widget(models.Model):
