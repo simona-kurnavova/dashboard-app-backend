@@ -26,12 +26,12 @@ SECRET_KEY = 'v&4v=bh0vzs3poc2^2#tlxuc)sqbp-*oopvru%kzzfl-76!(6x'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://login.microsoftonline.com', '127.0.0.1']
+ALLOWED_HOSTS = []
 
 # OAuth2 module settings
 OAUTH2_PROVIDER = {
     # this is the list of available scopes
-    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
+    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'},
 }
 
 # Django Rest Framework settings

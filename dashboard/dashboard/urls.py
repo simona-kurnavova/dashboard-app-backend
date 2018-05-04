@@ -1,9 +1,7 @@
 from django.conf.urls import url
 from django.conf.urls import include
 from django.contrib import admin
-
-# General routing
-# Administration url and include from the dash_app application
+from dash_app.models import App
 
 urlpatterns = [
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -14,3 +12,9 @@ urlpatterns = [
 urlpatterns += [
     url(r'^api/', include('rest_framework.urls')),
 ]
+
+apps = App.objects.filter(has_backend=True)
+for app in apps:
+    urlpatterns += [
+        url(r'^', include(app.name + '.urls'))
+    ]

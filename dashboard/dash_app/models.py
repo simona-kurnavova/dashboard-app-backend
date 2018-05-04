@@ -8,7 +8,8 @@ class App(models.Model):
     name = models.CharField(max_length=40, unique=True,
                             help_text="Unique name of the app, represents base of Angular component name")
     description = models.CharField(max_length=300, blank=True, null=True,  help_text="Brief description of the app")
-    allows_small_sizes = models.BooleanField(default=True)
+    allows_small_sizes = models.BooleanField(default=True, help_text="True if allows smaller sized widget placing")
+    has_backend = models.BooleanField(default=False, help_text="True if has own Django app on backend")
 
 
 class Account(models.Model):
