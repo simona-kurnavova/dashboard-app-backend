@@ -11,6 +11,9 @@ class App(models.Model):
     allows_small_sizes = models.BooleanField(default=True, help_text="True if allows smaller sized widget placing")
     has_backend = models.BooleanField(default=False, help_text="True if has own Django app on backend")
 
+    class Meta:
+        ordering = ['id']
+
 
 class Account(models.Model):
     """
@@ -23,6 +26,9 @@ class Account(models.Model):
     token = models.CharField(max_length=1000, help_text="Access token to application")
     info = models.CharField(max_length=300, blank=True, null=True,  help_text="Any info about the account or app")
 
+    class Meta:
+        ordering = ['id']
+
 
 class Dashboard(models.Model):
     """
@@ -31,6 +37,9 @@ class Dashboard(models.Model):
     owner = models.ForeignKey('auth.User', related_name='dashboards', on_delete=models.CASCADE, blank=True, null=True,
                               help_text="User that owns the Dashboard")
     justification = models.CharField(max_length=30, default='left', blank=True, null=True, help_text="Justification of dashboard widgets")
+
+    class Meta:
+        ordering = ['id']
 
 
 class Widget(models.Model):
@@ -48,3 +57,5 @@ class Widget(models.Model):
     size_x = models.IntegerField(help_text="Width of the widget on dashboard")
     size_y = models.IntegerField(help_text="Height of the widget on dashboard")
 
+    class Meta:
+        ordering = ['id']

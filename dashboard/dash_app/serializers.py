@@ -4,7 +4,9 @@ from django.contrib.auth.models import User
 
 
 class AppSerializer(serializers.ModelSerializer):
-    ''' App serializer - full information '''
+    """
+    App serializer - full information
+    """
     class Meta:
         ordering = ['-id']
         model = App
@@ -12,7 +14,9 @@ class AppSerializer(serializers.ModelSerializer):
 
 
 class AccountSerializer(serializers.ModelSerializer):
-    ''' Account serializer - full information '''
+    """
+    Account serializer - full information
+    """
     class Meta:
         ordering = ['-id']
         model = Account
@@ -20,7 +24,9 @@ class AccountSerializer(serializers.ModelSerializer):
 
 
 class WidgetSerializer(serializers.ModelSerializer):
-    ''' Widget serializer - full information '''
+    """
+    Widget serializer - full information
+    """
     class Meta:
         ordering = ['-id']
         model = Widget
@@ -28,7 +34,9 @@ class WidgetSerializer(serializers.ModelSerializer):
 
 
 class DashboardSerializer(serializers.ModelSerializer):
-    ''' Dashboard serializer - full information '''
+    """
+    Dashboard serializer - full information
+    """
     class Meta:
         ordering = ['-id']
         model = Dashboard
@@ -36,7 +44,9 @@ class DashboardSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    ''' User serializer - partial information including password, used only for user creation '''
+    """
+    User serializer - partial information including password, used only for user creation
+    """
     password = serializers.CharField(
         style={'input_type': 'password'}
     )
@@ -55,7 +65,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class CurrentUserSerializer(serializers.ModelSerializer):
-    ''' User serializer - partial information without sensitive data '''
+    """
+    User serializer - partial information without sensitive data
+    """
     class Meta:
         ordering = ['-id']
         model = User
