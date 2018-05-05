@@ -33,6 +33,13 @@ class AccountViewSet(viewsets.ModelViewSet):
         """
         return Account.objects.filter(owner=self.request.user.id)
 
+    def retrieve(self, request, pk=None):
+        """
+        Returns object of Account if user is the owner
+        """
+        serializer = AccountSerializer(Account.objects.get(owner=self.request.user.id, id=pk))
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
     def destroy(self, request, pk=None, **kwargs):
         """
         Returns 204 status after successful delete, 404 if doesn't exists and 403 if access is forbidden.
@@ -111,40 +118,41 @@ class DashboardViewSet(viewsets.ModelViewSet):
 
 
 class CreateUserView(APIView):
-   """
-   Standard view for creating new user only. Without authentication or permissions.
-   """
-   authentication_classes = ()
-   permission_classes = ()
-   model = User
-   serializer_class = UserSerializer
+    """
+    Standard view for creating new user only. Without authentication or permissions.
+    """
+    authentication_classes = ()
+    permission_classes = ()
+    model = User
+    serializer_class = UserSerializer
 
-   def post(self, request, format=None):
+    def post(self, request, format=None):
        """
        Creates new user and returns 201 on success and 400 on failure.
        """
        serializer = UserSerializer(data=request.data)
        if serializer.is_valid():
            serializer.save()
+           Dashboard.objects.create(owner=User.objects.get(id=serializer.data['id']), justification='left')
            return Response(serializer.data, status=status.HTTP_201_CREATED)
        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserViewSet(viewsets.ModelViewSet):
-   """
-   User view - allowed only for authenticated users
-   """
-   permission_classes = [permissions.IsAuthenticated]
-   queryset = User.objects.get_queryset().order_by('id')
-   serializer_class = CurrentUserSerializer
+    """
+    User view - allowed only for authenticated users
+    """
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = User.objects.get_queryset().order_by('id')
+    serializer_class = CurrentUserSerializer
 
-   def get_queryset(self):
+    def get_queryset(self):
        """
        Returns only requesting user information.
        """
        return User.objects.filter(id=self.request.user.id)
 
-   def partial_update(self, request, pk=None):
+    def partial_update(self, request, pk=None):
        """
        Partially updates user information and keeps the id.
        """
