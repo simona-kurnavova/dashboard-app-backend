@@ -8,12 +8,12 @@ Run locally
 3) Set up database with following commands:   
 `python3 manage.py makemigrations dash_app`   
 `python3 manage.py migrate dash_app`
-3) Register client app at: `http://127.0.0.1:8000/o/applications/`
+3) Log in to admin: `http://localhost:8000/admin` (for validation) and register client app at: `http://localhost:8000/o/applications/`
 4) Run with `python3 manage.py runserver`
 
 Database inserts:
 ----------------
-Inserts to database for applications to work (via Django admin `http://127.0.0.1:8000/admin` or Django shell)
+Inserts to database for applications to work (via Django admin `http://localhost:8000/admin` or Django shell)
 ```typescript
 App.objects.create(name='calendar', allows_small_sizes=False, has_backend=False)
 App.objects.create(name='onenote', allows_small_sizes=False, has_backend=True)
