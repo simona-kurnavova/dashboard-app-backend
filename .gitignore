@@ -4,4 +4,5 @@ dashboard/db.sqlite3
 dashboard/db.sqlite
 dashboard/dash_app/__pycache__/
 dashboard/dash_app/migrations/
-
+dashboard/onenote/migrations/
+dashboard/onenote/__pycache__/
