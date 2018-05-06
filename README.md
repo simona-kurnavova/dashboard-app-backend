@@ -3,9 +3,12 @@ Dashboard web application Django backend
 Run locally
 --------------
 
-1) Install dependencies from requirments.txt
+1) Install dependencies from requirements.txt: `pip install -r requirements.txt`
 2) Create Superuser: `python3 manage.py createsuperuser`
-3) Register client app at: `http://127.0.0.1:8000/o/applications/ `
+3) Set up database with following commands:   
+`python3 manage.py makemigrations dash_app`   
+`python3 manage.py migrate dash_app`
+3) Register client app at: `http://127.0.0.1:8000/o/applications/`
 4) Run with `python3 manage.py runserver`
 
 Database inserts:
