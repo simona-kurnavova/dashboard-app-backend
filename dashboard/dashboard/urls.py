@@ -13,8 +13,10 @@ urlpatterns += [
     url(r'^api/', include('rest_framework.urls')),
 ]
 
-apps = App.objects.filter(has_backend=True)
-for app in apps:
-    urlpatterns += [
-        url(r'^', include(app.name + '.urls'))
-    ]
+try:
+    apps = App.objects.filter(has_backend=True)
+    for app in apps:
+        urlpatterns += [
+            url(r'^', include(app.name + '.urls'))
+        ]
+except: pass
